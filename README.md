@@ -1,9 +1,11 @@
 
 # intro_to_R_for_medical_data_rmed2021
 
-To Dos
-[] Update Licensing
-[] Acknowledgements
+**To Dos**
+
+[ ] Update Licensing
+
+[ ] Acknowledgements
 
 These materials were collected and created for the R/Medicine 2021 Conference. 
 
