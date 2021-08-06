@@ -378,6 +378,7 @@ Let's quickly knit this document to see the output. This template is something c
 
 ## Further Reading and Resources
 
+## How to search for help
 
 
 ## Acknowledgments {.appendix}

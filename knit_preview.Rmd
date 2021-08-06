@@ -1,0 +1,65 @@
+---
+title: "Oh the things you can knit to!"
+author: "Mara Alexeev"
+date: "Last Updated `r Sys.Date()`"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(plotly)
+library(tidyverse)
+
+rmarkdown::all_output_formats(knitr::current_input())[1]
+rmarkdown::default_output_format(knitr::current_input())$name
+format <- rmarkdown::default_output_format(knitr::current_input())$name
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents  (and more!) For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+
+```{r cars}
+summary(cars)
+```
+
+## HTML only section
+
+You can have code that is only evaluated when the output is HTML to allow interactive outputs. 
+
+```{r eval=knitr::is_html_output(), fig.cap="A plot about cars", fig.id = "mtcars-plot"}
+test_plot <- ggplot(cars, aes(x = speed, y = dist)) +
+  geom_point()
+ggplotly(p = test_plot)
+```
+
+## Word only section
+
+Or parts that render only for word documents.
+
+```{r fig.cap="A plot about cars", fig.id = "mtcars-plot"}
+
+if (format == "word_document"){
+test_plot <- ggplot(cars, aes(x = speed, y = dist)) +
+  geom_point()
+test_plot
+}
+
+```
+
+## PDF only section
+
+Or you can have code that is only evaluated when the output is latex for a PDF. 
+
+```{r eval=knitr::is_latex_output(), fig.cap="A plot about cars", fig.id = "mtcars-plot"}
+test_plot <- ggplot(cars, aes(x = speed, y = dist)) +
+  geom_point()
+test_plot
+```
+
+
+
