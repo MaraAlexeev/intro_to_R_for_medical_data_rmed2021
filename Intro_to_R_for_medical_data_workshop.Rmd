@@ -59,7 +59,7 @@ Welcome to R/Medicine 2021. In this workshop we will be doing a hands-on introdu
 
 ## Why should I come to this workshop?
 
--   Learn how your organization can use R
+-   Learn how your organization could use R
 
 -   Write your first R code!
 
@@ -99,21 +99,6 @@ knitr::include_graphics("./images/r_rollercoaster.png")
 
 # Orientation
 
-## Systems Check
-
-- Log into RStudio Cloud
-
-- Raise hand in zoom if you are having trouble
-
-## Open up the project
-
-Once you are in RStudio Cloud, click on the project called "Intro to R for Medical Data".
-
-```{r, out.width="100%"}
-#knitr::include_graphics("./images/rstudio_cloud_project.png")
-```
-
-
 ## RStudio Cloud
 
 For this workshop we will be using RStudio Cloud.
@@ -125,6 +110,21 @@ You don't **need** to use RStudio to use R, but I do!
 RStudio on your computer and RStudio Cloud look very similar.
 
 R and RStudio are free to download to your computer. 
+
+## Systems Check
+
+- Log into RStudio Cloud
+
+- Raise hand in zoom if you are having trouble
+
+## Open up the project
+
+Once you are in RStudio Cloud, click on the project called "Intro to R for Medical Data".
+
+```{r, out.width="100%"}
+knitr::include_graphics("./images/rstudio_cloud_project.png")
+```
+
 
 ## RStudio Orientation: Basics
 
@@ -172,10 +172,15 @@ knitr::include_graphics("./images/code_chunk.png")
 
 # Graphing Data
 
+## Data in a Excel spreadsheet?
+
+No problem! R can ingest data from lots of locations including from Excel spreadsheets that you might already be very familiar with.
+
 ## Load data into R
 
 XXX smoke data from XXX with data dictionary here XXX put in link.
 
+Run the code chunk below by presening that green play button. 
 ```{r import_smoke_complete}
 
 smoke_complete <- read_excel("./data/smoke_complete.xlsx")
@@ -193,13 +198,26 @@ Go ahead and try to edit one of the values in this viewer. You will find that yo
 
 Why do you think this was designed that way?
 
-Next we will use the glimpse fu
+Next we will use the `glimpse()` function to learn about our data.
+
+How many rows of data do we have in our data?
+
+How many columns are there? What are some of the column names?
+
+Can you tell what kind of variable is stored in the columns? 
+
 ```{r glimpse}
 glimpse(smoke_complete)
 ```
 
 
+Next, we will use the `skim()` function to learn even more about our data.
 
+Press the green play button in the code chunk below.
+
+Now can you tell the different column types we have? What types are in this data?
+
+Look at the mini histograms at the bottom of the output? What can you learn very quickly about your data for the distribution `cigarettes_per_year` variable 
 ```{r skim}
 
 skim(smoke_complete)
@@ -207,49 +225,76 @@ skim(smoke_complete)
 
 ## Plotting our data
 
-Now we will take the 
+Now we will take the data we have loaded and make some plots!
 
-Produce a scatter plot of `smoke_complete` using `geom_point()`, mapping these variables to the following aesthetics:`year_of_birth` to the `x` aesthetic, `cigarettes_per_day` to the `y` aesthetic, and `gender` to the `color` aesthetic.
+Produce a histogram of `smoke_complete` using `geom_histogram()`, mapping these variables to the following aesthetics:`cigarettes_per_day` to the `x` aesthetic.
 
 ```{r scatter_plot, error = TRUE, echo=TRUE}
 
 plot_1 <- ggplot(data = smoke_complete,
-                 aes(x =  year_of_birth,
-                     y =  cigarettes_per_day,
-                     color =  gender)) +
-  geom_point()
+                 aes(x =  cigarettes_per_day)) +
+  geom_histogram()
 
 plot_1
 ```
 We've made a plot, but there are some issues with it: 
 
 - there's no title 
-- can't read x-axis labels
-- suspected overplotting of points
+- the axis labels are not in a pretty format
+- the default theme is a bit plain
 
 
-Ideas on how we could make this better?
+Let's make our plot a bit prettier. 
 
-- titles, fix labels, jitter
+- Give your plot a nice title. 
+- Create better labels for the x and y axes
+- Add the `theme_classic()` to the plot
 
 ```{r beautify_plot_2}
 
-plot_2 <- ggplot(smoke_complete,
-                 aes(x =  year_of_birth,
-                     y =  cigarettes_per_day,
-                     color =  gender)) +
-  geom_point()
+plot_2 <- ggplot(data = smoke_complete,
+                 aes(x =  cigarettes_per_day)) +
+  geom_histogram() +
+  labs(title = "An excellent title for your plot",
+       x = "Cigarettes Per Day",
+       y = "Count") +
+  theme_classic()
 
 plot_2
 
-plot_3 <- ggplot(smoke_complete,
-                 aes(x =  year_of_birth,
-                     y =  cigarettes_per_day)) +
-stat_bin2d(bins = 25) +
-  facet_wrap(. ~ gender)
+
+```
+You got a message after running that code that: "`stat_bin()` using `bins = 30`. Pick better value with `binwidth`."
+
+Let's modify the width of our histogram's bins in the code chunk below to 2. 
+
+```{r binwidth}
+plot_3 <- ggplot(data = smoke_complete,
+                 aes(x =  cigarettes_per_day)) +
+  geom_histogram(binwidth = 2) +
+  labs(title = "An excellent title for your plot",
+       x = "Cigarettes Per Day",
+       y = "Count") +
+  theme_classic()
 
 plot_3
 ```
+Finally let's explore the differences in daily cigarettes for the `gender` variable.
+
+Below add `gender` to the facet 
+```{r facet}
+plot_4 <- ggplot(data = smoke_complete,
+                 aes(x =  cigarettes_per_day)) +
+  geom_histogram(binwidth = 2) +
+  labs(title = "An excellent title for your plot",
+       x = "Cigarettes Per Day",
+       y = "Count") +
+  theme_classic() +
+  facet_grid(. ~ gender)
+
+plot_4 
+```
+
 
 ## `ggplot2`: A Grammar of Graphics
 
@@ -260,10 +305,10 @@ The `gg` is short for Grammar of Graphics, which means that visualizations are e
 Here's a visual summary of the different parts we're talking about today.
 
 ```{r}
-knitr::include_graphics("images/khealy_ggplot1.png")
+knitr::include_graphics("./images/constituents_of_graphics.png")
 ```
 
-Image from [Kieran Healy](https://kieranhealy.org/)
+Image from [Thomas Lin Pedersen](https://ds4biomed.tech/visualization-intro.html#grammar-of-graphics/)
 
 ## Learning to read `ggplot2` code
 
@@ -272,30 +317,47 @@ A `ggplot2` graphic consists of a `mapping` of variables in `data` to the `aes()
 In code, this is translated as:
 
 ```{r example_ggplot2, eval=FALSE, echo=TRUE}
-    #start the plot object with ggplot()
+    # start the plot object with ggplot()
+    # add assign smoke_complete to the data argument
 
     ggplot(data = smoke_complete) +   
 
-    # map the variables to visual properties of the graph]
+    # map the variables to visual properties of the graph
    
 
           aes(
             
-    # map the x-axis to year_of_birth
-              x = year_of_birth, 
+    # map the x-axis to age_at_diagnosis
+              x = age_at_diagnosis, 
               
     # map the y-axis to cigarettes_per_day       
               y = cigarettes_per_day,
     
-    # map the color to the gender variable
-              color = gender
+    # map the color to the disease variable
+              color = disease
               ) +
 
-    # add the geometry
-      geom_point()
+    # add the geometry and the alpha
+          geom_point(alpha = 0.2) + # complete the geom to geom_point
+  
+    # add labels to your plot
+
+          labs(title = "Age of diagnosis of cancer by daily cigarette consumption", # plot title
+               x="Age in days", # x-axis label
+               y="Cigarettes per day", # y-axis label
+               color = "Disease type") + # label for color legend
+  
+    # add a facet to your plot
+  
+          facet_grid(cols = vars(gender)) + # facet by gender variable
+  
+    # add a theme to your plot
+  
+          theme_bw()
+
 ```
 
-Things to note: we chain these three things together with `+` (plus sign).
+Things to note: we chain these things together with `+` (plus sign).
 
 
 # Part 2: Wraggling Data
