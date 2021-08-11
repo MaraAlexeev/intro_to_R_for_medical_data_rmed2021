@@ -241,7 +241,6 @@ We've made a plot, but there are some issues with it:
 
 - there's no title 
 - the axis labels are not in a pretty format
-- the default theme is a bit plain
 
 
 Let's make our plot a bit prettier. 
