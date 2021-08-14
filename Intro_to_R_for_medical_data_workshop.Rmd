@@ -29,6 +29,7 @@ library(dplyr)
 library(rmarkdown)
 library(readxl)
 library(skimr)
+library(kableExtra)
 ```
 
 ```{r, include=FALSE}
@@ -265,12 +266,12 @@ plot_2
 ```
 You got a message after running that code that: "`stat_bin()` using `bins = 30`. Pick better value with `binwidth`."
 
-Let's modify the width of our histogram's bins in the code chunk below to 2. 
+Let's modify the width of our histogram's bins in the code chunk below to 2. Then try 10.
 
 ```{r binwidth}
 plot_3 <- ggplot(data = smoke_complete,
                  aes(x =  cigarettes_per_day)) +
-  geom_histogram(binwidth = 2) +
+  geom_histogram(binwidth = 4) +
   labs(title = "An excellent title for your plot",
        x = "Cigarettes Per Day",
        y = "Count") +
@@ -283,11 +284,12 @@ Finally let's explore the differences in daily cigarettes for the `gender` varia
 Below add `gender` to the facet 
 ```{r facet}
 plot_4 <- ggplot(data = smoke_complete,
-                 aes(x =  cigarettes_per_day)) +
+                 aes(x =  cigarettes_per_day, fill = gender)) +
   geom_histogram(binwidth = 2) +
   labs(title = "An excellent title for your plot",
        x = "Cigarettes Per Day",
-       y = "Count") +
+       y = "Count",
+       fill = "Gender") +
   theme_classic() +
   facet_grid(. ~ gender)
 
@@ -299,9 +301,11 @@ plot_4
 
 `ggplot2` is an extremely powerful software library for visualization.
 
-The `gg` is short for Grammar of Graphics, which means that visualizations are expressed in a specific and consistent way for different types of visualizations in the package.
+The `gg` is short for Grammar of Graphics, which means that visualizations are expressed in a specific and consistent way for different types of visualizations in the package. There is a wonderful universe of complementary packages in R that extend ggplot to many different types of visualizations.
 
-Here's a visual summary of the different parts we're talking about today.
+Here's a visual summary of the different parts we're talking about today. There are many parts to visualizations, but many of us don't have the words to describe the different types of parts of a graph. Here we will spend some time breaking down the meeting of different constituent parts.
+
+Note: there are different ways to write `ggplot` code to get the same output, sort of formal versus causal conversation. Here we will focus on the more formal style because it is the most explicit, but also more verbose! As you get familiar with `ggplot`, you will likely shorten your code a bit at times from this very explicit method. We won't cover every layer in depth, but know that breaking down visualizations to these constituents allows for tremendous control. 
 
 ```{r}
 knitr::include_graphics("./images/constituents_of_graphics.png")
@@ -309,22 +313,21 @@ knitr::include_graphics("./images/constituents_of_graphics.png")
 
 Image from [Thomas Lin Pedersen](https://ds4biomed.tech/visualization-intro.html#grammar-of-graphics/)
 
+
 ## Learning to read `ggplot2` code
 
 A `ggplot2` graphic consists of a `mapping` of variables in `data` to the `aes()`thetic attributes of `geom_`etric objects.
 
 In code, this is translated as:
 
-```{r example_ggplot2, eval=FALSE, echo=TRUE}
+```{r full_example, eval=FALSE, echo=TRUE}
     # start the plot object with ggplot()
     # add assign smoke_complete to the data argument
 
-    ggplot(data = smoke_complete) +   
+    ggplot(data = smoke_complete,   
 
     # map the variables to visual properties of the graph
-   
-
-          aes(
+           mapping = aes(
             
     # map the x-axis to age_at_diagnosis
               x = age_at_diagnosis, 
@@ -334,7 +337,7 @@ In code, this is translated as:
     
     # map the color to the disease variable
               color = disease
-              ) +
+              )) +
 
     # add the geometry and the alpha
           geom_point(alpha = 0.2) + # complete the geom to geom_point
@@ -358,6 +361,101 @@ In code, this is translated as:
 
 Things to note: we chain these things together with `+` (plus sign).
 
+# Rebuild the prior plot
+
+Set the data argument to `smoke_complete`, then run the code chunk. 
+
+```{r step_1}
+
+ggplot(data = smoke_complete)
+```
+Add mapping arguments to the `aes` function. Assign the variable `age_at_diagnosis` to `x`, `cigarettes_per_day` to `y`, and `disease` to `color`. 
+
+Run the code chunk. How does it look different from the prior code chunk?
+
+```{r step_2}
+ggplot(data = smoke_complete, mapping = aes(x = age_at_diagnosis,
+                                            y = cigarettes_per_day,
+                                            color = disease))
+```
+Add `geom_point()`.
+
+```{r step_3}
+
+ggplot(data = smoke_complete, mapping = aes(x = age_at_diagnosis,
+                                            y = cigarettes_per_day,
+                                            color = disease)) +
+      geom_point()
+```
+Ok, wow, looking great!! Any major differences you notice between the graph provided before the step by step process in code chunk called [full_example](#full_example) above?
+
+
+In the next modification, modify the `alpha` argument to vary the opacity of the points. You can vary the value from 0 to 1. Try a few different values to see the difference. 
+
+```{r step_4}
+
+ggplot(data = smoke_complete, mapping = aes(x = age_at_diagnosis,
+                                            y = cigarettes_per_day,
+                                            color = disease)) +
+      geom_point(alpha = 0.2)
+```
+```{r step_5}
+
+plot_5 <- ggplot(data = smoke_complete, mapping = aes(x = age_at_diagnosis,
+                                            y = cigarettes_per_day,
+                                            color = disease)) +
+      geom_point(alpha = 0.2) +
+
+      labs(title = " ", 
+           x= " ",  
+           y= " ",  
+           color = " ") 
+
+plot_5
+```
+Wait! What little trick was that? See the variable `plot_5` in the code chunk above? That is storing your whole code with your nice new labels. Instead of continuing to rewrite your code, you can just modify as needed. Below we are going to facet by gender to separate out male and female to inspect the differences.
+
+```{r step_6}
+
+plot_5 +
+  
+      facet_grid(cols = vars(gender)) 
+```
+Finally we will play a bit with different themes. Pick two of the below themes and then add them to the `plot_5` and run the code chunk to compare them.
+
+Theme options:
+
+- theme_bw()
+- theme_light()
+- theme_minimal()
+- theme_dark()
+- theme_void()
+
+```{r step_7}
+
+plot_5 + theme_classic()
+
+plot_5 + theme_dark()
+```
+
+There are plenty of out of the box themes in `ggplot2`, but you can make a theme, use other people's, or even use a theme your organization might already have.
+Let's load the `ggthemes' library.
+
+```{r ggthemes}
+library(ggthemes)
+```
+
+```{r ggthemes_playground}
+
+plot_5 + theme_economist() + labs(subtitle = "The Economist Style")
+
+plot_5 + theme_wsj() + labs(subtitle = "WSJ Style")
+
+plot_5 + theme_tufte() + labs(subtitle = "Tufte Style")
+
+```
+
+# Time for a break!!
 
 # Part 2: Wraggling Data
 
@@ -370,30 +468,48 @@ Let's discuss a bit different ways we might need to reshape data.
 There are different packages and ways people wrangle data with R, but we're going to demonstrate using some packages from the tidyverse, which is a whole ecosystem of R packages organized around having *tidy* data. 
 
 
-
 ## select()
+
+From our `smoke_complete` data, let's select two columns to keep: `gender` and `days_to_death`. 
 
 ```{r select}
 select(smoke_complete, gender, days_to_death)   # select columns to keep
 ```
 
-```{r}
+There is a lovely package called `magrittr` that was loaded earlier, but includes something called a pipe, that looks like this in code: `%>%`. It allows use to call a nicely pipe data and preform lots of tasks on it. 
+
+Run the code below and inspect the output. How does it compare to the output from the prior code chunk?
+
+```{r intro_to_pipe}
 smoke_complete %>% select(gender, days_to_death) 
 ```
 
 
 ## filter()
 
+Now let's meet `filter()`. 
+
 ```{r}
 filter(smoke_complete, bcr_patient_barcode == "TCGA-18-3412")  # filter to specific rows
 ```
+
+The pipe alternative way. 
 
 ```{r}
 smoke_complete %>% filter(bcr_patient_barcode == "TCGA-18-3412")
 ```
 
+Together `select()` and `filter()` will be big workhorses in your data wraggling toolkit. However, at first it is easy to confuse which function does what. 
+
+`select()` selects the columns to stay. 
+
+`filter()` filters the rows to keep that meet certain conditions placed on columns. 
+So in the example above, we filtered the data to only keep the rows where the `bcr_patient_barcode` was equal to "TCGA-18-3412". 
+
 
 ## %>%
+
+We meet the pipe `%>%` earlier, but let's see how we can combine multiple pipes in a row to get a more complicated operation done.
 
 ```{r}
 smoke_complete %>% 
@@ -404,48 +520,73 @@ smoke_complete %>%
 
 ## mutate()
 
-```{r}
-smoke_complete %>%
-	mutate(months_to_death = )
-```
-
-
-1. Filters to tests from the clinic (`clinic_name`) of "picu"
-
-2. Selects the column with the received-to-verified turnaround time (`rec_ver_tat`) as well as the day from start of the pandemic (`pan_day`)
-
-```{r }
-_________ %>% # name of data goes here
-  filter(_______) %>% 
-  select(________, ________) 
-```
-
-Use mutate with %>% to create a new column named "total_tat" containing the total turnaround time for each test (sum of `col_rec_tat` and `rec_ver_tat`).
+Let's make `age_at_diagnosis` more human friendly by creating a new column that divides the days by 365.25. (There are great R packages to handle data, times, duration, intervals, and all those other message time and date issues!)
 
 ```{r}
-________ %>%
-	mutate(total_tat = ________)
+table_1 <- smoke_complete %>%
+	mutate(age_at_diagnosis_years = age_at_diagnosis/365.25) %>% 
+  select(age_at_diagnosis, age_at_diagnosis_years)
+
+table_1
 ```
+
+# A moment for beautiful tables
+
+There are several great packages that can make lovely tables that are publication ready.
+
+One quick example here of our prior code chunk output `table_1`. We take that same object and let a package called `kableExtra` work some magic on it!
+
+```{r kableExtra_magic}
+
+table_1 %>% 
+  head(10) %>% #just to only print the top 10 rows
+  kable() %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+```
+
 
 # Quick preview rmarkdown
 
 R Markdown documents, like this document, allow you to place text and analysis with the code all in a single document and output the result into different formats such as an html webpage, a pdf, or even a word document. 
 
-Let's quickly knit this document to see the output. This template is something called a distill template, but many different types are available, and you can customize it to your needs. 
-
-
+Let's quickly knit a document to seee the output. In pane 4, or the file pane, find the document called `knit_preview.Rmd` and open it. We will see examples of knitting the same .Rmd file to a word document, a pdf, and to html. 
 
 # Wrap up 
 
+## How to search for help
+
+Within R you can type ? followed by the name of the function eg `?filter()` in the console. 
+
+```{r help_console}
+
+knitr::include_graphics("./images/help_console.png")
+```
+
+
+In RStudio, you can look at the help tab in pane 4. 
+
+```{r rstudio_help}
+
+knitr::include_graphics("./images/rstudio_help.png")
+```
+
+However, in the end your best resource is probably going to be searching online for the issue. From online forms, to blog posts, to twitter threads there is a ton of content out there, but crafting a good search query is a workshop in itself!
+
 ## Further Reading and Resources
 
-## How to search for help
+[ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/index.html)
+
+[R for Data Science](https://r4ds.had.co.nz/)
+
+[R Graphics Cookbook](https://r-graphics.org/)
+
+The list is always growing! The trouble isn't finding good resources, it's finding time to read them!
 
 
 ## Acknowledgments {.appendix}
 
-This work was made possible by the distill[@allaire2018distill], ggplot, dplyr, and rmarkdown packages. xxx
+This work was made possible by the distill, ggplot, dplyr, and rmarkdown packages.
 
-The data used in this workshop came from Kaggle xxx
 
 ## Author Contributions {.appendix}

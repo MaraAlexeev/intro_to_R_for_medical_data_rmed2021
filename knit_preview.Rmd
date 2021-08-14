@@ -4,8 +4,8 @@ author: "Mara Alexeev"
 date: "Last Updated `r Sys.Date()`"
 output:
   word_document: default
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
