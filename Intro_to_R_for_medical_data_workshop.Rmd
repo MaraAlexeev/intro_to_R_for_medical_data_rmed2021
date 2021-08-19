@@ -552,6 +552,47 @@ table_1 <- smoke_complete %>%
 table_1
 ```
 
+# Getting counts
+
+Let's see how many unique values there are in each column of our dataset.
+The `skim` function from earlier will report the number of unique values in a column in the `n_unique` column.
+
+```{r}
+skim()
+```
+
+Usually we want to get counts from a categorical variable,
+so when there are 100s of unique values, that is typically a column that we wouldn't be counting.
+
+Here we can use the `count` function to count the number of observations for each unique value of the `vital_status` column.
+
+```{r}
+smoke_complete %>%
+  count(vital_status)
+```
+
+If we pass in multiple columns, it will give us a count for each combination of column values
+
+```{r}
+smoke_complete %>%
+  count(vital_status, disease)
+```
+
+If you want more of a "2x2" table of results, you can use the base-R `table` function.
+We can pass in each column of values from our data using the `$` notation
+
+```{r}
+table(smoke_complete$vital_status, smoke_complete$disease)
+```
+
+We can also use the `addmargins` if we want to see row and column sums with our count table.
+
+```{r}
+table(smoke_complete$vital_status, smoke_complete$disease) %>%
+  addmargins()
+```
+
+
 # A moment for beautiful tables
 
 There are several great packages that can make lovely tables that are publication ready.
