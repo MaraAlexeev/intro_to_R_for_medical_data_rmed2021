@@ -171,7 +171,7 @@ You can run a code chunk by pressing the green play button.
 knitr::include_graphics("./images/code_chunk.png")
 ```
 
-# Graphing Data
+# Part 1: Exploring Data
 
 ## Data in a Excel spreadsheet?
 
@@ -181,8 +181,9 @@ No problem! R can ingest data from lots of locations including from Excel spread
 
 XXX smoke data from XXX with data dictionary here XXX put in link.
 
-Run the code chunk below by presening that green play button. 
-```{r import_smoke_complete}
+Run the code chunk below by presening that green play button.
+
+```{r import_smoke_complete, echo=TRUE}
 
 smoke_complete <- read_excel("./data/smoke_complete.xlsx")
 ```
@@ -191,44 +192,50 @@ smoke_complete <- read_excel("./data/smoke_complete.xlsx")
 
 One thing that Excel does well is to provide an interactive visual representation of the data. This allows you to inspect it by sorting and filtering. RStudio actually does this well, too, with one difference - it won't let you *change* any of the data while you inspect it.
 
+### Viewing your data
+
 Look on the right at the *Environment* pane (you might have to click icon that looks like a spreadsheet on the "Environment" tab) and find the entry *smoke_complete*. This is the data frame you just created inside of R's memory. (If you don't see smoke_complete, try running the code chunk above again).
 
-Within the *Environment* pane, click on the *smoke_complete* to view the data.
+Within the *Environment* pane, click on the *smoke_complete* to view the data (*not* the blue arrow).
 
 Go ahead and try to edit one of the values in this viewer. You will find that you can't. It would have been easy for the RStudio programmers to allow editing of specific values, but they decided not to add that feature. 
 
-Why do you think this was designed that way?
+1. Why do you think this was designed so you cannot edit specific values?
+
+### Getting a quick glimpse
 
 Next we will use the `glimpse()` function to learn about our data.
-
-How many rows of data do we have in our data?
-
-How many columns are there? What are some of the column names?
-
-Can you tell what kind of variable is stored in the columns? 
 
 ```{r glimpse}
 glimpse(smoke_complete)
 ```
 
+1. How many rows of data do we have in our data?
+2. How many columns are there? What are some of the column names?
+3. Can you tell what kind of variable is stored in the columns? 
+
+### Getting quick summary statistics
 
 Next, we will use the `skim()` function to learn even more about our data.
 
 Press the green play button in the code chunk below.
 
-Now can you tell the different column types we have? What types are in this data?
+1. What are the different column types we have?
+2. What types are in this data?
 
-Look at the mini histograms at the bottom of the output? What can you learn very quickly about your data for the distribution `cigarettes_per_year` variable 
+Look at the mini histograms at the bottom of the output? What can you learn very quickly about your data for the distribution `cigarettes_per_year` variable
+
 ```{r skim}
 
 skim(smoke_complete)
 ```
 
-## Plotting our data
+# Part 2: Plotting our data
 
 Now we will take the data we have loaded and make some plots!
 
-Produce a histogram of `smoke_complete` using `geom_histogram()`, mapping these variables to the following aesthetics:`cigarettes_per_day` to the `x` aesthetic.
+Produce a histogram of `smoke_complete` using `geom_histogram()`, `mapping` these variables to the following aesthetics:`cigarettes_per_day` to the `x` aesthetic.
+Save this plot to the variable `plot_1` and show it.
 
 ```{r scatter_plot, error = TRUE, echo=TRUE}
 
@@ -238,6 +245,7 @@ plot_1 <- ggplot(data = smoke_complete,
 
 plot_1
 ```
+
 We've made a plot, but there are some issues with it: 
 
 - there's no title 
@@ -246,8 +254,8 @@ We've made a plot, but there are some issues with it:
 
 Let's make our plot a bit prettier. 
 
-- Give your plot a nice title. 
-- Create better labels for the x and y axes
+- Give your plot a nice title using `labs`
+- Create better labels for the x and y axes using `labs`
 - Add the `theme_classic()` to the plot
 
 ```{r beautify_plot_2}
@@ -261,12 +269,11 @@ plot_2 <- ggplot(data = smoke_complete,
   theme_classic()
 
 plot_2
-
-
 ```
-You got a message after running that code that: "`stat_bin()` using `bins = 30`. Pick better value with `binwidth`."
+You got a message after running that code that: "`stat_bin()` using `bins = 30`.
+Pick better value with `binwidth`."
 
-Let's modify the width of our histogram's bins in the code chunk below to 2. Then try 10.
+Let's modify the width of our histogram's bins in the code chunk below to `2`. Then try `10`.
 
 ```{r binwidth}
 plot_3 <- ggplot(data = smoke_complete,
@@ -279,12 +286,15 @@ plot_3 <- ggplot(data = smoke_complete,
 
 plot_3
 ```
-Finally let's explore the differences in daily cigarettes for the `gender` variable.
+Finally let's explore the differences in daily cigarettes for the `gender` variable
+by adding a `fill` color and `facet_grid`.
 
-Below add `gender` to the facet 
+Below add `gender` to the facet.
+
 ```{r facet}
 plot_4 <- ggplot(data = smoke_complete,
-                 aes(x =  cigarettes_per_day, fill = gender)) +
+                 aes(x =  cigarettes_per_day,
+                     fill = gender)) +
   geom_histogram(binwidth = 2) +
   labs(title = "An excellent title for your plot",
        x = "Cigarettes Per Day",
@@ -311,7 +321,7 @@ Note: there are different ways to write `ggplot` code to get the same output, so
 knitr::include_graphics("./images/constituents_of_graphics.png")
 ```
 
-Image from [Thomas Lin Pedersen](https://ds4biomed.tech/visualization-intro.html#grammar-of-graphics/)
+Image from [Thomas Lin Pedersen's ggplot2 workshop](https://www.youtube.com/watch?v=h29g21z0a68)
 
 
 ## Learning to read `ggplot2` code
@@ -361,14 +371,14 @@ In code, this is translated as:
 
 Things to note: we chain these things together with `+` (plus sign).
 
-# Rebuild the prior plot
+## Rebuild the prior plot
 
 Set the data argument to `smoke_complete`, then run the code chunk. 
 
 ```{r step_1}
-
 ggplot(data = smoke_complete)
 ```
+
 Add mapping arguments to the `aes` function. Assign the variable `age_at_diagnosis` to `x`, `cigarettes_per_day` to `y`, and `disease` to `color`. 
 
 Run the code chunk. How does it look different from the prior code chunk?
@@ -413,6 +423,7 @@ plot_5 <- ggplot(data = smoke_complete, mapping = aes(x = age_at_diagnosis,
 
 plot_5
 ```
+
 Wait! What little trick was that? See the variable `plot_5` in the code chunk above? That is storing your whole code with your nice new labels. Instead of continuing to rewrite your code, you can just modify as needed. Below we are going to facet by gender to separate out male and female to inspect the differences.
 
 ```{r step_6}
@@ -421,6 +432,7 @@ plot_5 +
   
       facet_grid(cols = vars(gender)) 
 ```
+
 Finally we will play a bit with different themes. Pick two of the below themes and then add them to the `plot_5` and run the code chunk to compare them.
 
 Theme options:
@@ -457,15 +469,15 @@ plot_5 + theme_tufte() + labs(subtitle = "Tufte Style")
 
 # Time for a break!!
 
-# Part 2: Wraggling Data
+# Part 3: Wraggling Data
 
 Rarely is your data going to be in the form you need it to be analyzed and plotted. You will often need to wrangle your data and change the shape of it a bit. 
 
-Let's discuss a bit different ways we might need to reshape data.
+Let's discuss a bit different ways we might need to process data.
 
 *Discussion*
 
-There are different packages and ways people wrangle data with R, but we're going to demonstrate using some packages from the tidyverse, which is a whole ecosystem of R packages organized around having *tidy* data. 
+There are different packages and ways people wrangle data with R, but we're going to demonstrate using some packages from the `{tidyverse}`, which is a whole ecosystem of R packages organized around having *tidy* data. 
 
 
 ## select()
@@ -476,9 +488,12 @@ From our `smoke_complete` data, let's select two columns to keep: `gender` and `
 select(smoke_complete, gender, days_to_death)   # select columns to keep
 ```
 
-There is a lovely package called `magrittr` that was loaded earlier, but includes something called a pipe, that looks like this in code: `%>%`. It allows use to call a nicely pipe data and preform lots of tasks on it. 
+There is a lovely package called `magrittr` that was loaded earlier, but includes something called a pipe, that looks like this in code: `%>%` (pronounced "then").
+It allows use to call a nicely pipe data and preform lots of tasks on it. 
 
-Run the code below and inspect the output. How does it compare to the output from the prior code chunk?
+Run the code below and inspect the output
+
+1. How does it compare to the output from the prior code chunk?
 
 ```{r intro_to_pipe}
 smoke_complete %>% select(gender, days_to_death) 
@@ -499,7 +514,7 @@ The pipe alternative way.
 smoke_complete %>% filter(bcr_patient_barcode == "TCGA-18-3412")
 ```
 
-Together `select()` and `filter()` will be big workhorses in your data wraggling toolkit. However, at first it is easy to confuse which function does what. 
+Together `select()` and `filter()` will be big workhorses in your data wrangling toolkit. However, at first it is easy to confuse which function does what. 
 
 `select()` selects the columns to stay. 
 
@@ -522,10 +537,13 @@ smoke_complete %>%
 
 Let's make `age_at_diagnosis` more human friendly by creating a new column that divides the days by 365.25. (There are great R packages to handle data, times, duration, intervals, and all those other message time and date issues!)
 
+`mutate` also lets you create multiple "mutations" (e.g., calculations) at the same time.
+
 ```{r}
 table_1 <- smoke_complete %>%
-	mutate(age_at_diagnosis_years = age_at_diagnosis/365.25) %>% 
-  select(age_at_diagnosis, age_at_diagnosis_years)
+	mutate(age_at_diagnosis_years = age_at_diagnosis/365.25,
+	       age_at_diagnosis_years_round = round(age_at_diagnosis_years, 1)) %>% 
+  select(age_at_diagnosis, age_at_diagnosis_years, age_at_diagnosis_years_round)
 
 table_1
 ```
@@ -536,7 +554,7 @@ There are several great packages that can make lovely tables that are publicatio
 
 One quick example here of our prior code chunk output `table_1`. We take that same object and let a package called `kableExtra` work some magic on it!
 
-```{r kableExtra_magic}
+```{r kableExtra_magic, echo=TRUE}
 
 table_1 %>% 
   head(10) %>% #just to only print the top 10 rows
@@ -544,7 +562,6 @@ table_1 %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 
 ```
-
 
 # Quick preview rmarkdown
 
