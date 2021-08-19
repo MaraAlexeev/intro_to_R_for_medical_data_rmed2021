@@ -9,6 +9,7 @@ author:
     affiliation: Boston Children's Hospital
   - first_name: "Ted"
     last_name: "Laderas, PhD"
+    url: laderast.github.io
     affiliation: DNANexus
   - first_name: "Daniel"
     last_name: "Chen, MPH"
