@@ -94,7 +94,7 @@ If you would like to some additional preparation for the workshop, I recommend l
 
 ## Starting your journey in R
 
-```{r}
+```{r, echo=FALSE}
 knitr::include_graphics("./images/r_rollercoaster.png")
 ```
 
@@ -122,14 +122,14 @@ R and RStudio are free to download to your computer.
 
 Once you are in RStudio Cloud, click on the project called "Intro to R for Medical Data".
 
-```{r, out.width="100%"}
+```{r, out.width="100%", echo=FALSE}
 knitr::include_graphics("./images/rstudio_cloud_project.png")
 ```
 
 
 ## RStudio Orientation: Basics
 
-```{r, out.width="100%"}
+```{r, out.width="100%", echo=FALSE}
 knitr::include_graphics("./images/four_panes.png")
 ```
 
@@ -137,13 +137,13 @@ knitr::include_graphics("./images/four_panes.png")
 
 Let's open the file in the file pane (number 4 in the image above) called `Intro_to_R_for_medical_data_workshop.Rmd`. This is what we will be working for the workshop.
 
-```{r}
+```{r, echo=FALSE}
 knitr::include_graphics("./images/find_the_file.png")
 ```
 
 Your document will look something like this. 
 
-```{r}
+```{r, echo=FALSE}
 knitr::include_graphics("./images/three_components_of_rmd.png")
 ```
 
@@ -167,7 +167,7 @@ Code chunks have a gray background.
 ```
 You can run a code chunk by pressing the green play button.
 
-```{r}
+```{r, echo=FALSE}
 knitr::include_graphics("./images/code_chunk.png")
 ```
 
@@ -307,7 +307,7 @@ Here's a visual summary of the different parts we're talking about today. There 
 
 Note: there are different ways to write `ggplot` code to get the same output, sort of formal versus causal conversation. Here we will focus on the more formal style because it is the most explicit, but also more verbose! As you get familiar with `ggplot`, you will likely shorten your code a bit at times from this very explicit method. We won't cover every layer in depth, but know that breaking down visualizations to these constituents allows for tremendous control. 
 
-```{r}
+```{r, echo=FALSE}
 knitr::include_graphics("./images/constituents_of_graphics.png")
 ```
 
@@ -558,16 +558,14 @@ Let's quickly knit a document to seee the output. In pane 4, or the file pane, f
 
 Within R you can type ? followed by the name of the function eg `?filter()` in the console. 
 
-```{r help_console}
-
+```{r help_console, echo=FALSE}
 knitr::include_graphics("./images/help_console.png")
 ```
 
 
 In RStudio, you can look at the help tab in pane 4. 
 
-```{r rstudio_help}
-
+```{r rstudio_help, echo=FALSE}
 knitr::include_graphics("./images/rstudio_help.png")
 ```
 
