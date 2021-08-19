@@ -592,6 +592,36 @@ knitr::include_graphics("./images/rstudio_help.png")
 
 However, in the end your best resource is probably going to be searching online for the issue. From online forms, to blog posts, to twitter threads there is a ton of content out there, but crafting a good search query is a workshop in itself!
 
+
+## Extra: Standardizing variable names: `clean_names()`
+
+The last package we'll talk about today is the `janitor` package. This package adds some really useful functions for *cleaning* data.
+
+The one I use the most is called `clean_names()`. This will mutate column names into a standard format - all character values will be lowercase and spaces will be converted to underscores. 
+
+The `smoke_complete` dataset has already had this function applied to it, but let's create a smaller example dataset where this wouldn't be the case.
+
+
+```{r}
+smoke_bad_colnames <- read_csv("data/smoke_bad_colnames.csv")
+smoke_bad_colnames
+```
+
+Ack! These column names have spaces, inconsistent capitalization, which make these difficult to work with.
+
+So let's use `clean_names()` to fix this:
+
+
+```{r}
+smoke_good_colnames <- smoke_bad_colnames %>%
+    clean_names()
+
+smoke_good_colnames
+```
+
+By default, `clean_names()` converts to snake case (spaces between words are replaced by an underscore `_`).  `clean_names()` will help you standardize your dataset's column names. Knowing that everything follows a certain convention will make your data cleaning journey better.
+
+
 ## Further Reading and Resources
 
 [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/index.html)
