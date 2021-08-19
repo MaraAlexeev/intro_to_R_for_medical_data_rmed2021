@@ -84,13 +84,13 @@ If you would like to some additional preparation for the workshop, I recommend l
 
 ## Schedule
 
-**Introduction** *\~xxx minutes*
+**Introduction** *\~10 minutes*
 
-**Systems check** *\~xxx minutes*
+**Systems check** *\~10 minutes*
 
-**Learn and Do** *\~xxx minutes*
+**Learn and Do** *\~120 minutes*
 
-**Wrap Up and Discussion** *\~xxx minutes*
+**Wrap Up and Discussion** *\~10 minutes*
 
 ## Starting your journey in R
 
