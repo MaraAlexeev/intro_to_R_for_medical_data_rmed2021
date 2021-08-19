@@ -7,9 +7,13 @@ author:
     last_name: "Alexeev, MD, MPH"
     url: maraalexeev.com
     affiliation: Boston Children's Hospital
-  - first_name: "Test"
-    last_name: "test"
-    affiliation: Test
+  - first_name: "Ted"
+    last_name: "Laderas, PhD"
+    affiliation: DNANexus
+  - first_name: "Daniel"
+    last_name: "Chen, MPH"
+    url: daniel.rbind.io
+    affiliation: Virginia Tech
 date: "`r Sys.Date()`"
 bibliography: [references.bib]
 link-citations: yes
