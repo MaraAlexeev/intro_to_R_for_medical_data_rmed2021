@@ -6,6 +6,9 @@
 [ ] Update Licensing
 
 [ ] Acknowledgements
+[ ] Add schedule details
+[ ] Everything up on RStudio Cloud
+[ ] Send to TAs
 
 These materials were collected and created for the R/Medicine 2021 Conference. 
 
