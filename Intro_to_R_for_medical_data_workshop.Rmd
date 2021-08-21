@@ -559,7 +559,7 @@ Let's see how many unique values there are in each column of our dataset.
 The `skim` function from earlier will report the number of unique values in a column in the `n_unique` column.
 
 ```{r}
-skim()
+skim(smoke_complete)
 ```
 
 Usually we want to get counts from a categorical variable,
@@ -645,6 +645,7 @@ The `smoke_complete` dataset has already had this function applied to it, but le
 
 
 ```{r}
+library(readr)
 smoke_bad_colnames <- read_csv("data/smoke_bad_colnames.csv")
 smoke_bad_colnames
 ```
@@ -655,6 +656,7 @@ So let's use `clean_names()` to fix this:
 
 
 ```{r}
+library(janitor)
 smoke_good_colnames <- smoke_bad_colnames %>%
     clean_names()
 
