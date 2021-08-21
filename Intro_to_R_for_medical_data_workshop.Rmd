@@ -189,7 +189,7 @@ XXX smoke data from XXX with data dictionary here XXX put in link.
 Run the code chunk below by presening that green play button.
 
 ```{r import_smoke_complete, echo=TRUE}
-
+library(readxl)
 smoke_complete <- read_excel("./data/smoke_complete.xlsx")
 ```
 
@@ -209,9 +209,10 @@ Go ahead and try to edit one of the values in this viewer. You will find that yo
 
 ### Getting a quick glimpse
 
-Next we will use the `glimpse()` function to learn about our data.
+Next we will use the `glimpse()` function from `{dplyr}` to learn about our data.
 
 ```{r glimpse}
+library(dplyr)
 glimpse(smoke_complete)
 ```
 
@@ -231,7 +232,7 @@ Press the green play button in the code chunk below.
 Look at the mini histograms at the bottom of the output? What can you learn very quickly about your data for the distribution `cigarettes_per_year` variable
 
 ```{r skim}
-
+library(skimr)
 skim(smoke_complete)
 ```
 
@@ -243,6 +244,7 @@ Produce a histogram of `smoke_complete` using `geom_histogram()`, `mapping` thes
 Save this plot to the variable `plot_1` and show it.
 
 ```{r scatter_plot, error = TRUE, echo=TRUE}
+library(ggplot2)
 
 plot_1 <- ggplot(data = smoke_complete,
                  aes(x =  cigarettes_per_day)) +
@@ -442,11 +444,11 @@ Finally we will play a bit with different themes. Pick two of the below themes a
 
 Theme options:
 
-- theme_bw()
-- theme_light()
-- theme_minimal()
-- theme_dark()
-- theme_void()
+- `theme_bw()`
+- `theme_light()`
+- `theme_minimal()`
+- `theme_dark()`
+- `theme_void()`
 
 ```{r step_7}
 
@@ -456,7 +458,7 @@ plot_5 + theme_dark()
 ```
 
 There are plenty of out of the box themes in `ggplot2`, but you can make a theme, use other people's, or even use a theme your organization might already have.
-Let's load the `ggthemes' library.
+Let's load the `{ggthemes}' library.
 
 ```{r ggthemes}
 library(ggthemes)
@@ -474,7 +476,7 @@ plot_5 + theme_tufte() + labs(subtitle = "Tufte Style")
 
 # Time for a break!!
 
-# Part 3: Wraggling Data
+# Part 3: Wrangling Data
 
 Rarely is your data going to be in the form you need it to be analyzed and plotted. You will often need to wrangle your data and change the shape of it a bit. 
 
@@ -490,10 +492,11 @@ There are different packages and ways people wrangle data with R, but we're goin
 From our `smoke_complete` data, let's select two columns to keep: `gender` and `days_to_death`. 
 
 ```{r select}
+library(dplyr)
 select(smoke_complete, gender, days_to_death)   # select columns to keep
 ```
 
-There is a lovely package called `magrittr` that was loaded earlier, but includes something called a pipe, that looks like this in code: `%>%` (pronounced "then").
+There is a lovely package called `{magrittr}` that was loaded earlier, but includes something called a pipe, that looks like this in code: `%>%` (pronounced "then").
 It allows use to call a nicely pipe data and preform lots of tasks on it. 
 
 Run the code below and inspect the output
@@ -637,7 +640,7 @@ However, in the end your best resource is probably going to be searching online 
 
 ## Extra: Standardizing variable names: `clean_names()`
 
-The last package we'll talk about today is the `janitor` package. This package adds some really useful functions for *cleaning* data.
+The last package we'll talk about today is the `{janitor}` package. This package adds some really useful functions for *cleaning* data.
 
 The one I use the most is called `clean_names()`. This will mutate column names into a standard format - all character values will be lowercase and spaces will be converted to underscores. 
 
