@@ -3,19 +3,9 @@
 
 **To Dos**
 
-[ ] Update Licensing
-
-[ ] Acknowledgements
-[ ] Add schedule details
-[ ] Everything up on RStudio Cloud
-[ ] Send to TAs
-
 These materials were collected and created for the R/Medicine 2021 Conference. 
 
 Many thanks to the many others that materials that have been reused or modified for this workshop. 
-
-- Ted
-- Stephen
 
 # Welcome
 
