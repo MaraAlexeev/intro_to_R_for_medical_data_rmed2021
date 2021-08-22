@@ -1,8 +1,6 @@
 
 # Introduction to R for Medical Data R/Medicine 2021
 
-**To Dos**
-
 These materials were collected and created for the R/Medicine 2021 Conference. 
 
 Many thanks to the many others that materials that have been reused or modified for this workshop. 
@@ -14,6 +12,8 @@ Hi Everyone,
 Thanks for registering for "Introduction to R for Medical Data R/Medicine 2021" workshop as part of the R/Medicine 2021 Conference. We're excited to have you. 
 
 Here's a checklist of what you need to do to prepare for the workshop.
+
+Check the email you registered with for R/Medicine 2021 to get details about the session.
 
 ## 1. Register for an RStudio.cloud account
 
@@ -29,7 +29,10 @@ This workshop is meant to be a safe space. Please Review our code of conduct her
 
 ## 4. Details of Workshop 
 
-The workshop will be conducted via Zoom starting. Please make sure that you have updated your Zoom software.
+The workshop will be conducted via Zoom. Please make sure that you have updated your Zoom software.
+
+**Scheduled time: August 24th, 2021 from 15:00 to 18:00 EST**
+
 
 ## 5. Now You're Ready!
 
