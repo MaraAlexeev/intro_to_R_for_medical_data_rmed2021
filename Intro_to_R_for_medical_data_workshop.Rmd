@@ -171,6 +171,8 @@ library(readxl)
 smoke_complete <- read_excel("./data/smoke_complete.xlsx")
 ```
 
+We have now loaded some data about patients with different types of cancer. You can view the source of this data [here.](https://fredhutchio.github.io/r_intro/) 
+
 ## Inspecting a data frame
 
 One thing that Excel does well is to provide an interactive visual representation of the data. This allows you to inspect it by sorting and filtering. RStudio actually does this well, too, with one difference - it won't let you *change* any of the data while you inspect it.
