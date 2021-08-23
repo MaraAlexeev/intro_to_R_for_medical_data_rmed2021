@@ -17,6 +17,7 @@ author:
     affiliation: Virginia Tech
 date: "`r Sys.Date()`"
 bibliography: packages.bib
+nocite: '@*'
 link-citations: yes
 output:
   distill::distill_article:
@@ -25,7 +26,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
 ```
 
 ```{r libraries, message=FALSE, warning=FALSE}
@@ -227,7 +228,7 @@ Save this plot to the variable `plot_1` and show it.
 library(ggplot2)
 
 plot_1 <- ggplot(data = smoke_complete,
-                 aes(x =  cigarettes_per_day)) +
+                 aes(x =  ________)) +
   geom_histogram()
 
 plot_1
@@ -250,10 +251,10 @@ Let's make our plot a bit prettier.
 plot_2 <- ggplot(data = smoke_complete,
                  aes(x =  cigarettes_per_day)) +
   geom_histogram() +
-  labs(title = "An excellent title for your plot",
-       x = "Cigarettes Per Day",
-       y = "Count") +
-  theme_classic()
+  labs(title = "________",
+       x = "________",
+       y = "________") +
+  ________
 
 plot_2
 ```
@@ -265,7 +266,7 @@ Let's modify the width of our histogram's bins in the code chunk below to `2`. T
 ```{r binwidth}
 plot_3 <- ggplot(data = smoke_complete,
                  aes(x =  cigarettes_per_day)) +
-  geom_histogram(binwidth = 4) +
+  geom_histogram(binwidth = ________) +
   labs(title = "An excellent title for your plot",
        x = "Cigarettes Per Day",
        y = "Count") +
@@ -288,7 +289,7 @@ plot_4 <- ggplot(data = smoke_complete,
        y = "Count",
        fill = "Gender") +
   theme_classic() +
-  facet_grid(. ~ gender)
+  facet_grid(. ~ ________)
 
 plot_4 
 ```
@@ -317,7 +318,7 @@ A `ggplot2` graphic consists of a `mapping` of variables in `data` to the `aes()
 
 In code, this is translated as:
 
-```{r full_example, eval=FALSE, echo=TRUE}
+```{r full-example, fig.cap="Full Example", eval=TRUE, echo=TRUE}
     # start the plot object with ggplot()
     # add assign smoke_complete to the data argument
 
@@ -363,7 +364,7 @@ Things to note: we chain these things together with `+` (plus sign).
 Set the data argument to `smoke_complete`, then run the code chunk. 
 
 ```{r step_1}
-ggplot(data = smoke_complete)
+ggplot(data = ________)
 ```
 
 Add mapping arguments to the `aes` function. Assign the variable `age_at_diagnosis` to `x`, `cigarettes_per_day` to `y`, and `disease` to `color`. 
@@ -371,9 +372,9 @@ Add mapping arguments to the `aes` function. Assign the variable `age_at_diagnos
 Run the code chunk. How does it look different from the prior code chunk?
 
 ```{r step_2}
-ggplot(data = smoke_complete, mapping = aes(x = age_at_diagnosis,
-                                            y = cigarettes_per_day,
-                                            color = disease))
+ggplot(data = smoke_complete, mapping = aes(x = ________,
+                                            y = ________,
+                                            color = ________))
 ```
 Add `geom_point()`.
 
@@ -382,10 +383,10 @@ Add `geom_point()`.
 ggplot(data = smoke_complete, mapping = aes(x = age_at_diagnosis,
                                             y = cigarettes_per_day,
                                             color = disease)) +
-      geom_point()
+      ________
 ```
-Ok, wow, looking great!! Any major differences you notice between the graph provided before the step by step process in code chunk called [full_example](#full_example) above?
 
+Ok, wow, looking great!! Any major differences you notice between the graph created by our step by step code chunk called Figure \@ref(fig:full-example) and the graph you just made above?
 
 In the next modification, modify the `alpha` argument to vary the opacity of the points. You can vary the value from 0 to 1. Try a few different values to see the difference. 
 
@@ -394,8 +395,11 @@ In the next modification, modify the `alpha` argument to vary the opacity of the
 ggplot(data = smoke_complete, mapping = aes(x = age_at_diagnosis,
                                             y = cigarettes_per_day,
                                             color = disease)) +
-      geom_point(alpha = 0.2)
+      geom_point(alpha = ________)
 ```
+
+Let's add some lovely, informative labels to our graph.
+
 ```{r step_5}
 
 plot_5 <- ggplot(data = smoke_complete, mapping = aes(x = age_at_diagnosis,
@@ -403,21 +407,23 @@ plot_5 <- ggplot(data = smoke_complete, mapping = aes(x = age_at_diagnosis,
                                             color = disease)) +
       geom_point(alpha = 0.2) +
 
-      labs(title = " ", 
-           x= " ",  
-           y= " ",  
-           color = " ") 
+      labs(title = "________", 
+           x= "________",  
+           y= "________",  
+           color = "________") 
 
 plot_5
 ```
 
-Wait! What little trick was that? See the variable `plot_5` in the code chunk above? That is storing your whole code with your nice new labels. Instead of continuing to rewrite your code, you can just modify as needed. Below we are going to facet by gender to separate out male and female to inspect the differences.
+Wait! What little trick was that? See the variable `plot_5` in the code chunk above? That is storing your whole code with your nice new labels. Instead of continuing to rewrite your code, you can just modify as needed. 
+
+Below add gender to the cols argument of `facet_grid()` to separate out male and female to inspect the differences.
 
 ```{r step_6}
 
 plot_5 +
   
-      facet_grid(cols = vars(gender)) 
+      facet_grid(cols = vars(________)) 
 ```
 
 Finally we will play a bit with different themes. Pick two of the below themes and then add them to the `plot_5` and run the code chunk to compare them.
@@ -432,9 +438,9 @@ Theme options:
 
 ```{r step_7}
 
-plot_5 + theme_classic()
+plot_5 + ________
 
-plot_5 + theme_dark()
+plot_5 + ________)
 ```
 
 There are plenty of out of the box themes in `ggplot2`, but you can make a theme, use other people's, or even use a theme your organization might already have.
@@ -473,7 +479,7 @@ From our `smoke_complete` data, let's select two columns to keep: `gender` and `
 
 ```{r select}
 library(dplyr)
-select(smoke_complete, gender, days_to_death)   # select columns to keep
+select(smoke_complete, ________, ________)   # select columns to keep
 ```
 
 There is a lovely package called `{magrittr}` that was loaded earlier, but includes something called a pipe, that looks like this in code: `%>%` (pronounced "then").
@@ -550,8 +556,7 @@ The `skim` function from earlier will report the number of unique values in a co
 skim(smoke_complete)
 ```
 
-Usually we want to get counts from a categorical variable,
-so when there are 100s of unique values, that is typically a column that we wouldn't be counting.
+Usually we want to get counts from a categorical variable, so when there are 100s of unique values, that is typically a column that we wouldn't be counting.
 
 Here we can use the `count` function to count the number of observations for each unique value of the `vital_status` column.
 
@@ -667,5 +672,6 @@ By default, `clean_names()` converts to snake case (spaces between words are rep
 [R Graphics Cookbook](https://r-graphics.org/)
 
 The list is always growing! The trouble isn't finding good resources, it's finding time to read them!
+
 
 
